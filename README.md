@@ -1,5 +1,10 @@
+# Sol&Sop NFT
 
-# Circuit
+* Circuits & Contracts aren't audited.
+* It does not include any "approve" functions.
+* You can mint ERC721 w/ deployer's secret signatures.
+* You can donate ERC20 or ETH to this contract.
+# Circuit: ZKP keeps your redeem code private.
 
 ```
 [INFO]  snarkJS: Curve: bn-128

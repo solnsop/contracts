@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {Verifier} from "./Verifier.sol";
 
@@ -20,6 +21,12 @@ contract SolNSop is ERC721 {
         _deployer = msg.sender;
     }
 
+    receive() external payable {
+        if (msg.value > 0) {
+            payable(_deployer).transfer(msg.value);
+        }
+    }
+
     function mint(
         uint256 tokenId,
         uint256[2] memory a,
@@ -28,7 +35,7 @@ contract SolNSop is ERC721 {
         string memory metadataURI,
         bytes memory signature,
         string memory message
-    ) public {
+    ) public payable {
         require(
             keccak256(abi.encodePacked(tokenId, metadataURI)).recover(
                 signature
@@ -45,6 +52,16 @@ contract SolNSop is ERC721 {
         emit Congrats(message);
         _uris[tokenId] = metadataURI;
         _mint(msg.sender, tokenId);
+        if (msg.value > 0) {
+            payable(_deployer).transfer(msg.value);
+        }
+    }
+
+    function rescueERC20(address erc20) public {
+        IERC20(erc20).transfer(
+            _deployer,
+            IERC20(erc20).balanceOf(address(this))
+        );
     }
 
     function isClaimed(uint256 tokenId) public view returns (bool) {
