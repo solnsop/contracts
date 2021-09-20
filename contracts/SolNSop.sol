@@ -3,16 +3,14 @@ pragma solidity >=0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {Verifier} from "./Verifier.sol";
 
 contract SolNSop is ERC721 {
-    using ECDSA for bytes32;
-
     Verifier public claimVerifier;
 
     address private _deployer;
-    mapping(uint256 => string) private _uris;
+    string[] private _metadata; // stored metadata
+    mapping(uint256 => uint256) private _pMetadata; // metadata pointer
 
     event Congrats(string message);
 
@@ -32,16 +30,9 @@ contract SolNSop is ERC721 {
         uint256[2] memory a,
         uint256[2][2] memory b,
         uint256[2] memory c,
-        string memory metadataURI,
-        bytes memory signature,
+        uint256 metadataId,
         string memory message
     ) public payable {
-        require(
-            keccak256(abi.encodePacked(tokenId, metadataURI)).recover(
-                signature
-            ) == _deployer,
-            "Not an approved metadataURI"
-        );
         uint256[2] memory inputs;
         inputs[0] = tokenId;
         inputs[1] = uint256(uint160(msg.sender));
@@ -50,7 +41,7 @@ contract SolNSop is ERC721 {
             "SNARK proof failed"
         );
         emit Congrats(message);
-        _uris[tokenId] = metadataURI;
+        _pMetadata[tokenId] = metadataId;
         _mint(msg.sender, tokenId);
         if (msg.value > 0) {
             payable(_deployer).transfer(msg.value);
@@ -79,6 +70,6 @@ contract SolNSop is ERC721 {
             _exists(tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
-        return _uris[tokenId];
+        return _metadata[_pMetadata[tokenId]];
     }
 }
