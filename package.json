@@ -4,7 +4,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "snark",
+    "contracts"
   ],
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
