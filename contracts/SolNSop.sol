@@ -7,6 +7,7 @@ import {Verifier} from "./Verifier.sol";
 
 contract SolNSop is ERC721 {
     Verifier public claimVerifier;
+    string public vows;
 
     address private _deployer;
     string[] private _metadata; // stored metadata
@@ -14,9 +15,12 @@ contract SolNSop is ERC721 {
 
     event Congrats(string message);
 
-    constructor(address claimVerifier_) ERC721("Sol&Sop", "SNS") {
+    constructor(address claimVerifier_, string memory vows_)
+        ERC721("Sol&Sop Wedding NFT", "SOLNSOP")
+    {
         claimVerifier = Verifier(claimVerifier_);
         _deployer = msg.sender;
+        vows = vows_;
     }
 
     receive() external payable {
