@@ -15,6 +15,11 @@
 [INFO]  snarkJS: # of Labels: 21968
 [INFO]  snarkJS: # of Outputs: 0
 ```
+# Contracts
+
+* Verifier: 0x3b702fe5D3C9FA2A1c22F6fdd8Cc28EF75c21c59
+* NFT: 0xce4a4726a1d043c5be1dd534371c5d089f090d9f
+
 
 # Metadata
 

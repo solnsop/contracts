@@ -77,6 +77,6 @@ contract SolNSop is ERC721 {
             _exists(tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
-        return _metadata[_pMetadata[tokenId]];
+        return string(abi.encodePacked("ipfs://", _metadata[_pMetadata[tokenId]]));
     }
 }

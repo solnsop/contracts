@@ -1,6 +1,6 @@
 {
   "name": "@solnsop/contracts",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "files": [
