@@ -15,12 +15,15 @@ contract SolNSop is ERC721 {
 
     event Congrats(string message);
 
-    constructor(address claimVerifier_, string memory vows_)
-        ERC721("Sol&Sop Wedding NFT", "SOLNSOP")
-    {
+    constructor(
+        address claimVerifier_,
+        string memory vows_,
+        string[] memory metadata_
+    ) ERC721("Sol&Sop Wedding NFT", "SOLNSOP") {
         claimVerifier = Verifier(claimVerifier_);
         _deployer = msg.sender;
         vows = vows_;
+        _metadata = metadata_;
     }
 
     receive() external payable {
