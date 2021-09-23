@@ -20,6 +20,7 @@ template Claimer() {
     verifier.S <== sigS;
     verifier.R8x <== sigR8x;
     verifier.R8y <== sigR8y;
+    verifier.M <== tokenId;
 }
 
 component main = Claimer();
